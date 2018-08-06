@@ -1,0 +1,29 @@
+# docker-compose up --scale front=2
+# browse to http://localhost:8080
+
+version: "3"
+  
+services:
+  front:
+    image: nginx
+    volumes:
+       - ./nginx.basic.conf:/etc/nginx/nginx.conf:ro
+       - ./www:/data/www:ro
+    networks:
+      - web
+  lb:
+    image: nginx
+    ports: 
+      - "8080:80"
+    volumes:
+       - ./nginx.lb.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - web
+
+
+networks:
+  web:
+
+volumes:
+  www:
+  nginx.basic.conf:
