@@ -18,6 +18,7 @@ services:
       - "8080:80"
     volumes:
        - ./nginx.lb.conf:/etc/nginx/nginx.conf:ro
+       - ./cache:/data/nginx/cache
     networks:
       - web
 
