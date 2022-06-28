@@ -4,10 +4,10 @@ nginx using limit_req module to limit 10MB of adresses to 5 requests per minutes
 
 source : http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
 
-`bash
+```bash
 docker compose up
-`
+```
 
-`bash
+```bash
 watch -n 2 -d -- curl http://localhost
-`
+```
