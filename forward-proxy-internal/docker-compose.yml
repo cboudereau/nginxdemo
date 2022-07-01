@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  www:
+    image: nginx
+    volumes:
+      - ./nginx/nginx.www.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/www:/data/www:ro
+    ports:
+      - 80:80
+    networks:
+      - web
+
+  forward-proxy:
+    image: nginx
+    volumes:
+      - ./nginx/nginx.fp.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:8080
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge
