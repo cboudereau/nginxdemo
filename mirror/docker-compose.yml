@@ -1,0 +1,29 @@
+# docker compose down --remove-orphans -v --rmi local && docker compose up
+services:
+  website-mirror:
+    image: nginx:1.25.2
+    volumes:
+      - ./website/nginx.conf:/etc/nginx/nginx.conf:ro
+
+  website:
+    image: nginx:1.25.2
+    volumes:
+      - ./website/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./website/www:/data/www:ro
+
+  repeater:
+    image: nginx:1.25.2
+    ports:
+      - 8080:80
+    volumes:
+      - ./repeater/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./website/www/:/data/www:ro
+    depends_on:
+      - website
+      - website-mirror
+
+  curl:
+    image: curlimages/curl:8.1.2
+    entrypoint: sh -c "curl -v http://repeater:80/"
+    depends_on:
+      - repeater
